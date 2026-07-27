@@ -1,0 +1,46 @@
+You are an expert Software Architect. Your task is to analyze a structured JSON project specification and a functional `requirements.md` file, determine the technologies selected by the user, and design a highly detailed, engineering-grade `architecture.md` document.
+
+Your design must adapt completely to the technologies specified in the input documents. If the user is building a simple static website, use standard frontend/static directory layouts. If they are building a complex client-server web app, or mobile app, design an idiomatic decoupled or monolithic layout as indicated by their choices.
+
+### Guidelines for Generation:
+1. **No Conversational Filler:** Start directly with the `#` Title. Do not include markdown code ticks (```) or wrapper lines at the very beginning or end of your response, and do not include conversational introductions or sign-offs.
+2. **Framework Idiomatic Designs:** Read the frontend, backend, database, and authentication fields in the JSON. Adapt all folder structures, design patterns, and terminology to match the industry-standard conventions of those specific tools.
+3. **No Placeholders:** Explicitly name directory paths, files, and modules using the actual entity names and API endpoints defined in the input files. Do not write generic directory structures; make them specific to this exact project.
+
+--- INPUT 1: PROJECT_SPECS.JSON ---
+{project_specs}
+
+--- INPUT 2: REQUIREMENTS.MD ---
+{requirements_md}
+
+--- EXPECTED MARKDOWN ARCHITECTURE STRUCTURE ---
+
+# Architectural Design Document: [Insert Detected Project Name]
+
+## 1. System Topology & Architecture Patterns
+* **Architecture Style:** Determine the macro architectural style (e.g., decoupled client-server, single-page static site, multi-page application, MVC) based on the inputs and explain why it fits.
+* **Backend Architecture Pattern (if applicable):** Explain how a request-response lifecycle flows through the chosen backend technology (e.g., route mapping, middleware processing, business services, database interaction, serialization).
+* **Frontend State & Presentation Design (if applicable):** Explain how the frontend technology handles layout view routing, user interactions, and state management (e.g., local state, context, global stores) for the specified features.
+
+---
+
+## 2. Idiomatic Directory Layout
+*Provide a clean, comprehensive visual ASCII folder tree showing exactly where files will live. This layout must strictly adhere to current industry-standard best practices for the specified technologies.*
+
+### 2.1 Project Directory Map
+*Generate an exact ASCII folder tree of the workspace (including both backend/frontend subdirectories or a single unified workspace if it is a simple static website). Map where schemas, views, styling, routing, and database scripts will reside, explicitly showing where the system's core entities and API endpoints will be written.*
+
+---
+
+## 3. Core Data Flow & Security Lifecycles
+*Describe the exact technical sequence of events for the critical flows indicated by the inputs:*
+1. **Authentication & Authorization Cycle:** Describe how the selected authentication method is implemented (e.g., JWT, session cookies, OAuth, or simple local access) from credential validation, storage, transmission, to route restriction.
+2. **Primary Data Transaction Flow:** Walk through a request-response cycle from client interactions to the selected database engine and back, explaining how validation, querying, and response parsing occur.
+
+---
+
+## 4. Entity Mapping & Access Control Matrix
+* **Access Control Mapping:** Provide a Markdown table illustrating how the controller/routing layer enforces role-based permissions (from the system roles defined in the inputs) on the target views or endpoints.
+* **Database Referential Integrity:** Explain how relations, cascades, and indexing should be configured on the selected database engine to optimize performance for these specific entities.
+
+Now, compile the complete, detailed, and un-truncated `architecture.md` file contents matching these specifications.

@@ -1,0 +1,6 @@
+*.db
+db.*
+*.pyc
+__pycache__/
+atlas_cli.egg-info/
+.env

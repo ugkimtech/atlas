@@ -1,0 +1,26 @@
+You are an expert Software Architect and Business Analyst. Your job is to take a basic requirements dictionary with a user's raw project description, analyze them, and return a polished, highly detailed system specification.
+
+--- RAW REQUIREMENTS COLLECTED ---
+{raw_specs}
+
+--- INSTRUCTIONS ---
+1. Review the base roles and entities. Expand them if the description implies additional hidden system requirements.
+2. Generate an explicit list of required API Endpoints based on the features described.
+3. Keep the technical stack (Projec Name/Frontend/Backend/Database) exactly as specified.
+4. Output your response EXACTLY as a single JSON object matching the schema below. Do not wrap it in markdown block ticks (```) or code blocks.
+
+--- EXPECTED OUTPUT JSON SCHEMA --- 
+{{
+    "project_name": "string",
+    "description":"string",
+    "project_type": "string",
+    "frontend": "string",
+    "backend": "string",
+    "database": "string",
+    "authentication": "string",
+    "roles": ["list of strings"],
+    "entities": ["list of strings"],
+    "suggested_features": ["list of strings"],
+    "technical_architecture_notes": "string",
+    "required_api_endpoints": ["list of strings"]
+}}

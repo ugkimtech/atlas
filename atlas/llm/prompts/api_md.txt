@@ -1,0 +1,86 @@
+You are an expert Lead API Architect. Your task is to analyze four project design documents (`project_specs.json`, `requirements.md`, `architecture.md`, and `erd.md`) and compile a highly detailed, engineering-grade `api.md` document.
+
+This document serves as the absolute single source of truth for all network communication between client interfaces and server applications. It must strictly reflect the entities, relationships, database constraints, and tech stack routing conventions established in the prior design phases.
+
+### CRITICAL INSTRUCTIONS (PREVENT TRUNCATION & ENSURE ACCURACY):
+1. **No Conversational Filler:** Start directly with the `#` Title. Do not include introductory text, explanations, code tick wrappers around the entire document, or closing sign-offs.
+2. **Framework Idiomatic Contracts:** Adapt endpoint formats, status codes, and authorization headers to match the selected tech stack conventions (e.g., RESTful HTTP endpoints, JSON payloads, `Authorization: Bearer <token>`). If the project spec indicates a purely static site or non-API project, adapt the document to detail client-side routes and form-handling contracts instead.
+3. **No Abbreviations or Placeholders:** You are strictly FORBIDDEN from using `...`, `// rest of fields here`, or shortcut markers. Every single required API endpoint must be fully written out with its HTTP method, URL path, authorization requirements, headers, request body schema (JSON), and success/error response payloads.
+
+--- INPUT 1: PROJECT_SPECS.JSON ---
+{project_specs}
+
+--- INPUT 2: REQUIREMENTS.MD ---
+{requirements_md}
+
+--- INPUT 3: ARCHITECTURE.MD ---
+{architecture_md}
+
+--- INPUT 4: ERD.MD ---
+{erd_md}
+
+--- EXPECTED MARKDOWN API STRUCTURE ---
+
+# API Interface Specifications: [Insert Project Name]
+
+## 1. Global API Standards & Conventions
+* **Base URL:** `/api` (or environment-configured host)
+* **Data Format:** `application/json` (unless handling multipart/form-data uploads)
+* **Authentication Scheme:** Detail the mechanism (e.g., `Bearer <JWT_TOKEN>` in `Authorization` header, Session Cookies, OAuth2)
+* **Standard HTTP Status Codes:** Brief table mapping standard codes used (`200 OK`, `201 Created`, `204 No Content`, `400 Bad Request`, `401 Unauthorized`, `403 Forbidden`, `404 Not Found`, `500 Internal Error`)
+* **Standard Error Response Format:**
+```json
+{{
+  "error": {{
+    "code": "STRING_ERROR_CODE",
+    "message": "Human-readable message explaining the failure.",
+    "details": null
+  }}
+}}
+
+2. API Endpoint Catalog
+Group endpoints logically by system resource/module (e.g., Authentication, Users, Core Domain Entities, Admin). Fully detail every endpoint.
+
+2.x Resource Name (e.g., Authentication / Playlists / Users)
+[HTTP_METHOD] [URL_PATH]
+Description: What this endpoint accomplishes.
+
+Access Control: [Public | Authenticated User | Admin / Role-Based]
+
+Headers:
+
+Content-Type: application/json
+
+Authorization: Bearer <token> (if applicable)
+
+Path Parameters / Query Parameters:
+
+parameter_name (type, required/optional) - Description
+
+Request Body (JSON):
+
+JSON
+{{
+  "field_name": "example_value"
+}}
+Success Response (HTTP Status Code):
+
+JSON
+{{
+  "field_name": "example_value"
+}}
+Error Responses:
+
+400 Bad Request: Validation failure description.
+
+401 Unauthorized: Invalid or missing credentials.
+
+[Repeat this exact structure for EVERY endpoint in the system without skipping or abbreviating.]
+
+3. End-to-End Endpoint Mapping Matrix
+Provide a comprehensive summary table for fast developer scanning:
+
+HTTP Method	Route Endpoint	Target Role / Permission	Request Payload Key	Primary Success Code
+POST	/api/auth/login	Public	username, password	200 OK
+GET	/api/resource	Authenticated	None	200 OK
+Now, compile the complete, comprehensive, and fully expanded api.md file matching these specifications.

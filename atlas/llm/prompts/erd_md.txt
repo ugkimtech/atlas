@@ -1,0 +1,53 @@
+You are an expert Database Architect and Schema Engineer. Your task is to analyze three project design documents (`project_specs.json`, `requirements.md`, and `architecture.md`), extract all system entities, data fields, types, and attributes, and compile a highly detailed, industry-standard Entity-Relationship Diagram (ERD) document.
+
+Your design must adapt dynamically to the database type specified in the project specifications (e.g., Relational/SQL like PostgreSQL/MySQL, or Non-Relational/NoSQL like MongoDB). If NoSQL is specified, model the tables as logical collections/documents showing embedding or referencing relationships.
+
+### Guidelines for Generation:
+1. **No Conversational Filler:** Start directly with the `#` Title. Do not include introductory text, explanations, or closing sign-offs.
+2. **Double Markdown Block Isolation:** You MUST output the visual diagram inside an isolated ````mermaid ... ```` code fence block so that markdown renderers parse it natively.
+3. **Strict Mermaid erDiagram Syntax:** 
+   * Do NOT use hyphens (`-`) or special characters inside entity names (use camelCase or PascalCase like `PlaybackHistory`, not `playback-history`).
+   * Follow the syntax: `ENTITY_NAME ||--o{{ OTHER_ENTITY : "relationship label"`
+   * Explicitly define field types (e.g., `string`, `int`, `boolean`, `datetime`, `decimal`) and key markers (`PK`, `FK`) inside the brackets.
+4. **No Placeholders or Truncations:** Map out every single entity, field, and relationship mentioned across the input documentation.
+
+--- INPUT 1: PROJECT_SPECS.JSON ---
+{project_specs}
+
+--- INPUT 2: REQUIREMENTS.MD ---
+{requirements_md}
+
+--- INPUT 3: ARCHITECTURE.MD ---
+{architecture_md}
+
+--- EXPECTED MARKDOWN ERD STRUCTURE ---
+
+# Entity-Relationship Diagram (ERD) Specifications
+
+## 1. Visual Relationship Map
+*The Mermaid.js structural data diagram defining entities, properties, and crows-foot cardinality notations.*
+
+```mermaid
+erDiagram
+    %% Example syntax format to follow:
+    %% User ||--o{{ Playlist : "owns"
+    %% User {{
+    %%     int id PK
+    %%     string username
+    %% }}
+    
+    [Your Generated Diagram Data Here]
+2. Comprehensive Data Dictionary
+Provide a detailed data taxonomy table for every entity discovered in the system, detailing exact database types, operational constraints, and relationships.
+
+2.1 [EntityName]
+Field Name	Data Type	Key Type	Nullable / Constraints	Functional Description
+id	int / uuid	PK	NOT NULL, UNIQUE	Primary structural record identifier.
+[field_name]	[type]	[FK / None]	[Constraints]	[Description]
+3. Relationship Cardinality & Referential Integrity Matrix
+Provide a concise table defining how structural constraints enforce data consistency at the database engine level:
+
+Source Entity	Target Entity	Relationship Type	Foreign Key Field	On Delete Behavior
+e.g., Playlist	User	Many-to-One (N:1)	user_id	CASCADE
+e.g., Music	Album	Many-to-One (N:1)	album_id	SET_NULL
+Now, compile the complete, detailed, and un-truncated erd.md file matching these rules perfectly.
