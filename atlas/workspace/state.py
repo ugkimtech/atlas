@@ -11,9 +11,9 @@ def init_state(state_path):
                 'requirements', 
                 'architecture', 
                 'ERD',
-                'API'
-                'init project', 
-                'project skeleton', 
+                'API',
+                'init-project', 
+                'project-skeleton', 
                 'code',
             ]
     }

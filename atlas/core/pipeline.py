@@ -203,7 +203,7 @@ class Pipeline:
             state = read_json(Path(docs_path)/"state.json")
             if not "API" in state["completed_states"]:
                 state["completed_states"].append("API")
-                state["current_state"] = "init project"
+                state["current_state"] = "init-project"
                 write_json(Path(docs_path)/"state.json", state)
             print("[green]api.md file created successfully.[/green]")
             return True

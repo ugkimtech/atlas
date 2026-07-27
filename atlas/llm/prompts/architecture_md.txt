@@ -26,6 +26,7 @@ Your design must adapt completely to the technologies specified in the input doc
 
 ## 2. Idiomatic Directory Layout
 *Provide a clean, comprehensive visual ASCII folder tree showing exactly where files will live. This layout must strictly adhere to current industry-standard best practices for the specified technologies.*
+*The Project root folder must be exactly the same as project name as specified in project_specs.json, if there are spaces in it, replace spaces with '_'.*
 
 ### 2.1 Project Directory Map
 *Generate an exact ASCII folder tree of the workspace (including both backend/frontend subdirectories or a single unified workspace if it is a simple static website). Map where schemas, views, styling, routing, and database scripts will reside, explicitly showing where the system's core entities and API endpoints will be written.*

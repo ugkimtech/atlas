@@ -1,34 +1,43 @@
 from rich import print
 from pathlib import Path
-from ..workspase.files import read_json
+from ..workspace.files import read_json, read_file
 from .backend.django.manager import DjangoManager
 from .frontend.reactjs.manager import ReactjsManager
+from ..core.pipeline import Pipeline
 
 class ProjectManager:
     def __init__(self):
         self.current_dir = Path(".")
-        self.docs_path = None
-        for folder in self.current_dir.iterdir():
-            if not folder.is_file() and folder.name == "atlas-docs":
-                self.docs_path = Path(self.current_dir)/"atlas-docs"
-            else:
-                print("[red]You are not within the project folder. please first run [green]cd <your project folder>[/green] to proceed[/red]")
+        self.docs_path = Pipeline().docs_path()
+        self.specs = read_json(Path(self.docs_path)/"project_spec.json")
+        self.reqs =  read_file(Path(self.docs_path)/"requirements.md")
+        self.arch =  read_file(Path(self.docs_path)/"architecture.md")
+        self.erd =  read_file(Path(self.docs_path)/"erd.md")
+        self.api =  read_file(Path(self.docs_path)/"api.md")
     
     
-    def start_peoject(self):
+    def start_project(self):
         backend = ''
         frontend = ''
-        specs = read_json(Path(docs_path)/"project_spec.json")
-        if specs["backend"]:
-            backend = specs["backend"]
-            
-            match(backend):
-                case "django":
-                    DjangoManager()
-            
-        if specs["frontend"]:
-            frontend = specs["frontend"]
-            match(frontend):
-                case "reactjs":
-                    ReactjsManager()
-            # call frontend manager
+        specs = read_json(Path(self.docs_path)/"project_spec.json")
+        try:
+            if specs["backend"]:
+                backend = specs["backend"]
+                
+                match(backend):
+                    case "django":
+                        django = DjangoManager(self.specs, self.reqs, self.arch, self.erd, self.api)
+                        django.start_django()
+                        
+        except KeyError:
+            print("Continuing without backend...")
+        
+        try:
+            if specs["frontend"]:
+                frontend = specs["frontend"]
+                match(frontend):
+                    case "reactjs":
+                        ReactjsManager()
+                        
+        except KeyError:
+            print("Continuing without frontend...")

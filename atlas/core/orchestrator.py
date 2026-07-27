@@ -4,6 +4,7 @@ import typer
 import os
 from pathlib import Path
 from ..workspace.files import read_json, read_file
+from ..generators.manager import ProjectManager
 
 
 class Orchestrator:
@@ -83,6 +84,9 @@ class Orchestrator:
                 if self.pipeline.create_api_md():
                     return True
                 return False
+                
+            case "init-project":
+                ProjectManager().start_project()
             
             case _:
                 print(f"[red]Unknown command: {command}[/red]")
