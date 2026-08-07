@@ -16,3 +16,17 @@ def sync_requirements():
         return
     else:
         return
+
+
+def architecture_md():
+    print("\nAre you sure you want to make changes to architecture document? (y/n)\n")
+    opt = typer.prompt("\t")
+    if opt.lower() == "y":
+        print("[yellow]Regenerating architecture.md...[/yellow]")
+        if orch.sub_command("architecture"):
+            print("[green]Regenerated successfully.[/green]")
+        else:
+            print("Nothing chaged! try again.")
+        return
+    else:
+        return

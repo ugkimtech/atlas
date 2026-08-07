@@ -133,16 +133,55 @@ class Pipeline:
             "project_specs":json.dumps(specs, indent=2),
             "requirements_md":requirements_md
         }
-        arch_md = llm.generate("architecture", prompt_var)
+        arch = llm.generate("architecture", prompt_var)
         
-        if arch_md:
-            write_file(Path(docs_path)/"architecture.md", arch_md)
+        if arch:
+            write_file(Path(docs_path)/"architecture.md", arch)
+            
             state = read_json(Path(docs_path)/"state.json")
             if not "architecture" in state["completed_states"]:
                 state["completed_states"].append("architecture")
                 state["current_state"] = "ERD"
                 write_json(Path(docs_path)/"state.json", state)
             print("[green]architecture.md file created successfully.[/green]")
+            return True
+        else:
+            return False
+    
+    
+    # create project blueprint
+    def create_blueprint(self):
+        docs_path = self.docs_path()
+        if not docs_path:
+            return None
+        specs = read_json(Path(docs_path)/"project_spec.json")
+        requirements_md = read_file(Path(docs_path)/"requirements.md")
+        architecture_md = read_file(Path(docs_path)/"architecture.md")
+        
+        print("[yellow]Preparing project_blueprint.json file...[/yellow]")
+        
+        llm = LLMManager()
+        blue_var = {
+            "project_specs":json.dumps(specs, indent=2),
+            "requirements_md":requirements_md,
+            "architecture":architecture_md
+        }
+        blueprint = llm.generate("blueprint", blue_var)
+        
+        try:
+            blueprint = json.loads(blueprint)
+        except TypeError:
+            print(f"[red]Response can't be structured! {blueprint}")
+        
+        if blueprint:
+            write_json(Path(docs_path)/"project_blueprint.json", blueprint)
+            
+            state = read_json(Path(docs_path)/"state.json")
+            if not "blueprint" in state["completed_states"]:
+                state["completed_states"].append("blueprint")
+                state["current_state"] = "ERD"
+                write_json(Path(docs_path)/"state.json", state)
+            print("[green]project_blueprint.json created successfully.[/green]")
             return True
         else:
             return False

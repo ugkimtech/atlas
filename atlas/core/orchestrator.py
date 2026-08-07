@@ -63,15 +63,21 @@ class Orchestrator:
             case "sync":
                 req_md = self.pipeline.create_requirements_md()
                 arc = self.pipeline.create_architecture_md()
+                blue = self.pipeline.create_blueprint()
                 erd =self.pipeline.create_erd()
                 api = self.pipeline.create_api_md()
-                if req_md and arc and erd and api:
+                if req_md and arc and blue and erd and api:
                     return True
                 else:
                     return False
                     
             case "architecture":
                 if self.pipeline.create_architecture_md():
+                    return True
+                return False
+            
+            case "blueprint":
+                if self.pipeline.create_blueprint():
                     return True
                 return False
             

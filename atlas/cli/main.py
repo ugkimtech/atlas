@@ -1,7 +1,7 @@
 import typer
 from .commands.start import start_atlas
 from .commands.docs import atlas_docs
-from .commands.sync import sync_requirements
+from .commands.sync import sync_requirements, architecture_md
 from .commands.proceed import proceed_project
 from .commands.api import change_api
 
@@ -34,6 +34,14 @@ def api():
     """
     change_api()
     return
+
+
+@app.command()
+def architecture():
+    """
+    Regenerates architecture.md file
+    """
+    architecture_md()
 
 @app.command()
 def proceed():

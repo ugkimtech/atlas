@@ -14,6 +14,7 @@ class LLMManager:
             "structure_req":"structure_requirements.txt",
             "requirements_md":"requirements_md.txt",
             "architecture":"architecture_md.txt",
+            "blueprint":"blueprint.txt",
             "erd":"erd_md.txt",
             "api":"api_md.txt"
         }
@@ -46,9 +47,9 @@ class LLMManager:
         except AttributeError:
             print("[red]Load Prompt template returned no data!")
             return
-        except KeyError as e:
+        """except KeyError as e:
             print(f"[red]Atlas parsing error![/red] {e}")
-            return
+            return"""
         
     #generate
     # The only called method outside

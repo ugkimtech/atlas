@@ -1,0 +1,166 @@
+You are an expert Software Architect.
+
+Your task is to analyze the provided `project_spec.json`, `requirements.md`, and `architecture.md` and produce a structured machine-readable `project_blueprint` json describing the entire project layout and generation metadata.
+
+The blueprint must strictly follow the selected technologies, frameworks, and architectural style.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INPUTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROJECT_SPEC.JSON
+
+{project_specs}
+
+REQUIREMENTS.MD
+
+{requirements_md}
+
+ARCHITECTURE.MD
+
+{architecture}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GENERAL REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Begin directly with the blueprint contents.
+• Do NOT include markdown code fences (```).
+• Do NOT include conversational text.
+• Do NOT use placeholders.
+• Use actual folder names and full file paths, as described in architecture.md.
+• Follow current industry best practices.
+• Adapt everything to the selected frameworks.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REQUIRED PROJECT BLUEPRINT OUTPUT EXAMPLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+This blueprint is intended for an AI code generation engine.
+
+The JSON MUST follow this schema.
+
+{{
+  "project_tree": [
+    {{
+      "path": "backend/",
+      "type": "directory"
+    }},
+    {{
+      "path": "backend/core/settings.py",
+      "type": "file",
+      "description":"",
+      "depends_on": []
+    }},
+    {{
+      "path": "backend/users/",
+      "type": "directory"
+    }},
+    {{
+      "path": "backend/users/models.py",
+      "type": "file",
+      "description":"",
+      "depends_on": []
+    }},
+    {{
+      "path": "backend/users/serializers.py",
+      "type": "file",
+      "description":"",
+      "depends_on": [
+        "backend/users/models.py"
+      ]
+    }},
+    {{
+      "path": "backend/users/views.py",
+      "type": "file",
+      "description":"",
+      "depends_on": [
+        "backend/users/models.py",
+        "backend/users/serializers.py",
+        "backend/users/permissions.py"
+      ]
+    }},
+    {{
+      "path": "backend/.env",
+      "type": "file",
+      "description":"",
+      "depends_on": []
+    }},
+  ],
+
+  "generation_order": [
+    "backend/core/settings.py",
+    "backend/users/models.py",
+    "backend/tasks/models.py",
+    "backend/users/serializers.py",
+    "backend/tasks/serializers.py",
+    "backend/users/permissions.py",
+    "backend/tasks/permissions.py",
+    "backend/users/views.py",
+    "backend/tasks/views.py",
+    "backend/users/urls.py",
+    "backend/tasks/urls.py",
+    "backend/project/urls.py"
+  ],
+
+  "generation_context": {{
+    "backend/users/models.py": [
+      "requirements.md",
+      "erd.md"
+    ],
+    "backend/users/serializers.py": [
+      "requirements.md",
+      "erd.md",
+      "backend/users/models.py"
+    ],
+    "backend/users/views.py": [
+      "requirements.md",
+      "api.md",
+      "backend/users/models.py",
+      "backend/users/serializers.py",
+      "backend/users/permissions.py"
+    ],
+    "backend/users/urls.py": [
+      "backend/users/views.py"
+    ]
+  }},
+  "build_stages": [
+    {{
+      "stage": 1,
+      "name": "Models",
+      "files": [
+        "backend/users/models.py",
+        "backend/tasks/models.py"
+      ]
+    }},
+    {{
+      "stage": 2,
+      "name": "Serializers",
+      "files": [
+        "backend/users/serializers.py",
+        "backend/tasks/serializers.py"
+      ]
+    }},
+    {{
+      "stage": 3,
+      "name": "Permissions"
+    }},
+    {{
+      "stage": 4,
+      "name": "Views"
+      "files":[]
+    }},
+    {{
+      "stage": 5,
+      "name": "Routing"
+      "files":[]
+    }}
+  ]
+}}
+
+The JSON must be valid.
+
+Do not omit fields.
+
+Do not truncate output.
+
+Ensure every file appearing in the directory tree of architecture also exists in the `files` array.

@@ -10,6 +10,7 @@ def init_state(state_path):
         "states":[
                 'requirements', 
                 'architecture', 
+                'blueprint',
                 'ERD',
                 'API',
                 'init-project', 
