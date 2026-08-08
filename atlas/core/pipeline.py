@@ -8,6 +8,8 @@ from ..agents.requirements_agent import Requirements, StructureRequirements
 from ..workspace.files import create_folder, write_file, read_file, write_json, read_json
 from ..workspace.state import init_state
 from ..llm.manager import LLMManager
+from ..generators.backend.django.manager import DjangoManager
+from ..generators.manager import ProjectManager
 
 
 class Pipeline:
@@ -80,6 +82,11 @@ class Pipeline:
             return False
         if not init_state(Path(docs_path)/"state.json"):
             return None
+        try:
+            if read_json(Path(self.docs_path)/"project_spec.json")["backend"] == "django":
+                DjangoManager().init_dj_state()
+        except KeyError:
+            pass
         return True
         
     
@@ -249,13 +256,21 @@ class Pipeline:
         else:
             return False
     
-    # initialize the project
-    def build_project(self):
-        pass
+    # initialize the project & skeleton
+    def project_skeleton(self):
+        manager = ProjectManager()
+        manager.start_project()
+        state = read_json(Path(self.docs_path())/"state.json")
+        state["completed_states"].append("project-skeleton")
+        state["current_state"] = "code"
+        write_json(Path(self.docs_path())/"state.json", state)
+        return 
     
-    # create project skeleton
     
     # code
+    def code(self):
+        manager = ProjectManager()
+        manager.start_code()
     
     # test
     

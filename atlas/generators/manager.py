@@ -3,12 +3,13 @@ from pathlib import Path
 from ..workspace.files import read_json, read_file
 from .backend.django.manager import DjangoManager
 from .frontend.reactjs.manager import ReactjsManager
-from ..core.pipeline import Pipeline
+from .services import docs_path
+from .code import Code
 
 class ProjectManager:
     def __init__(self):
         self.current_dir = Path(".")
-        self.docs_path = Pipeline().docs_path()
+        self.docs_path = docs_path()
         self.specs = read_json(Path(self.docs_path)/"project_spec.json")
         self.reqs =  read_file(Path(self.docs_path)/"requirements.md")
         self.arch =  read_file(Path(self.docs_path)/"architecture.md")
@@ -28,7 +29,7 @@ class ProjectManager:
                 match(backend):
                     case "django":
                         django = DjangoManager(self.specs, self.reqs, self.arch, self.erd, self.api, self.blueprint)
-                        django.start_django()
+                        django.dj_pipeline()
                         
         except KeyError:
             print("Continuing without backend...")
@@ -43,3 +44,8 @@ class ProjectManager:
                         
         except KeyError:
             print("Continuing without frontend...")
+        
+        
+    def start_code(self):
+        code = Code(self.specs, self.reqs, self.arch, self.erd, self.api, self.blueprint)
+        code.write_code()

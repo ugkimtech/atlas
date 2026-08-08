@@ -96,6 +96,12 @@ class Orchestrator:
                 manager = ProjectManager()
                 manager.start_project()
             
+            case "project-skeleton":
+                self.pipeline.project_skeleton()
+                
+            case "code":
+                self.pipeline.code()
+            
             case _:
                 print(f"[red]Unknown command: {command}[/red]")
                 return None
