@@ -12,7 +12,7 @@ class PackageManager:
         try:
             res = subprocess.run([pkg, '--version'], capture_output=True, check=True, text=True)
             print(res.stdout)
-            print(f"{pkg} found successfully.")
+            print(f"[green]{pkg} found installed.[/green]")
             return True
         except subprocess.CalledProcessError as e:
             print(f"[red]Error {e.stderr}")

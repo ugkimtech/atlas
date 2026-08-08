@@ -66,7 +66,8 @@ class Orchestrator:
                 blue = self.pipeline.create_blueprint()
                 erd =self.pipeline.create_erd()
                 api = self.pipeline.create_api_md()
-                if req_md and arc and blue and erd and api:
+                blueprint = self.pipeline.create_blueprint()
+                if req_md and arc and blue and erd and api and blueprint:
                     return True
                 else:
                     return False
@@ -92,7 +93,8 @@ class Orchestrator:
                 return False
                 
             case "init-project":
-                ProjectManager().start_project()
+                manager = ProjectManager()
+                manager.start_project()
             
             case _:
                 print(f"[red]Unknown command: {command}[/red]")

@@ -14,6 +14,7 @@ class ProjectManager:
         self.arch =  read_file(Path(self.docs_path)/"architecture.md")
         self.erd =  read_file(Path(self.docs_path)/"erd.md")
         self.api =  read_file(Path(self.docs_path)/"api.md")
+        self.blueprint = read_json(Path(self.docs_path)/"project_blueprint.json")
     
     
     def start_project(self):
@@ -26,7 +27,7 @@ class ProjectManager:
                 
                 match(backend):
                     case "django":
-                        django = DjangoManager(self.specs, self.reqs, self.arch, self.erd, self.api)
+                        django = DjangoManager(self.specs, self.reqs, self.arch, self.erd, self.api, self.blueprint)
                         django.start_django()
                         
         except KeyError:
@@ -35,6 +36,7 @@ class ProjectManager:
         try:
             if specs["frontend"]:
                 frontend = specs["frontend"]
+                
                 match(frontend):
                     case "reactjs":
                         ReactjsManager()

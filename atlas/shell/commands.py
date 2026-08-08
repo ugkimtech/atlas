@@ -25,7 +25,7 @@ def run_server(comm):
     Streams logs directly to the terminal and hands control to the user.
     """
     command = comm.split(' ')
-    print(f"\nExecuting {comm} in inerractive environment...")
+    print(f"\nExecuting {comm} in interractive environment...")
     print("Press Ctrl+C in your terminal to stop the process.\n")
 
     try:
